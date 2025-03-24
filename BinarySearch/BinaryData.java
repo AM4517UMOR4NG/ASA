@@ -1,13 +1,28 @@
-package BinarySearch;
+package BinarySearch;  // Mendefinisikan package tempat class ini berada
+
 /**
- * BinaryData.java
- * 
- * Kelas ini menyediakan data array yang sudah terurut.
- * Data ini akan digunakan sebagai input pada metode Binary Search.
+ * Class BinaryData yang menyediakan metode untuk menghasilkan data uji
+ * yang akan digunakan dalam algoritma Binary Search
  */
 public class BinaryData {
-    public static int[] getData() {
-        // Pastikan array terurut agar Binary Search bekerja dengan benar
-        return new int[]{1, 3, 5, 7, 9, 11, 13, 15, 17, 19};
+    
+    /**
+     * Metode statis untuk menghasilkan array berurutan dengan nilai 1 sampai size
+     * 
+     * @param size ukuran array yang akan dibuat
+     * @return array berurutan dengan nilai dari 1 sampai size
+     */
+    public static int[] getData(int size) {
+        //Membuat array baru dengan ukuran yang diberikan sebagai parameter
+        int[] arr = new int[size];
+        
+        //Melakukan iterasi dari 0 sampai size-1
+        for (int i = 0; i < size; i++) {
+            // Mengisi array dengan nilai i+1, sehingga nilai dimulai dari 1 sampai size
+            arr[i] = i + 1;
+        }
+        
+        //Mengembalikan array yang sudah diisi
+        return arr;
     }
 }

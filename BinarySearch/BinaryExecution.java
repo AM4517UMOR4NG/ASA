@@ -1,62 +1,70 @@
-package BinarySearch;
+package BinarySearch;  // Mendefinisikan package tempat class ini berada
 
-import java.util.Scanner;
-import java.util.Arrays;
+import java.util.Scanner;  // Mengimpor class Scanner untuk menerima input dari pengguna
 
+/**
+ * Class BinaryExecution yang berfungsi sebagai main class untuk menjalankan
+ * algoritma Binary Search dan mengukur waktu eksekusinya
+ */
 public class BinaryExecution {
+    /**
+     * Metode main yang akan dijalankan saat program dieksekusi
+     * 
+     * @param args argumen baris perintah (tidak digunakan dalam program ini)
+     */
     public static void main(String[] args) {
-        Scanner binaryScanner = new Scanner(System.in);
-
-        //Input jumlah elemen array (pastikan sudah terurut)
-        System.out.print("Masukkan jumlah elemen array (harus terurut): ");
-        int n = binaryScanner.nextInt();
-        int[] arr = new int[n];
-
-        //Input elemen-elemen array
-        System.out.println("Masukkan elemen array yang sudah terurut:");
-        for (int i = 0; i < n; i++) {
-            arr[i] = binaryScanner.nextInt();
+        //Membuat objek Scanner untuk menerima input dari pengguna
+        Scanner scanner = new Scanner(System.in);
+        
+        //Menampilkan pilihan ukuran array kepada pengguna
+        System.out.println("Pilih ukuran array:");
+        System.out.println("1) 1.000  2) 100.000  3) 1.000.000  4) 10.000.000");
+        
+        //Membaca pilihan pengguna
+        int choice = scanner.nextInt();
+        
+        //Mendeklarasikan variabel untuk menyimpan ukuran array
+        int size;
+        
+        //Menentukan ukuran array berdasarkan pilihan pengguna
+        switch (choice) {
+            case 1: size = 1000; break;
+            case 2: size = 100000; break;
+            case 3: size = 1000000; break;
+            case 4: size = 10000000; break;
+            default:
+                //Jika pilihan tidak valid, menggunakan ukuran default 1000
+                System.out.println("Pilihan tidak valid, menggunakan 1000 elemen.");
+                size = 1000;
         }
-
-        //Input nilai target yang akan dicari
+        
+        //Membuat array data dengan ukuran yang telah ditentukan menggunakan metode getData dari class BinaryData
+        int[] data = BinaryData.getData(size);
+        
+        //Meminta pengguna memasukkan nilai target yang akan dicari
         System.out.print("Masukkan nilai target yang dicari: ");
-        int x = binaryScanner.nextInt();
-
-        //Menampilkan array yang sudah diinput
-        System.out.println("Array yang dimasukkan: " + Arrays.toString(arr));
-        System.out.println();
-
-        //Initialize variabel untuk Binary Search
-        int left = 0, right = arr.length - 1;
-        int iteration = 1;
-        int result = -1;
-
-        //Proses Binary Search dengan penjelasan langkah per langkah
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            System.out.println("Iterasi " + iteration + ":");
-            System.out.println("  left = " + left + ", right = " + right + ", mid = " + mid);
-            System.out.println("  Memeriksa elemen arr[mid] = " + arr[mid]);
-
-            if (arr[mid] == x) {
-                result = mid;
-                System.out.println("  Nilai " + x + " ditemukan pada indeks " + mid);
-                break;
-            } else if (arr[mid] < x) {
-                System.out.println("  Nilai " + x + " lebih besar dari " + arr[mid] + ", mencari di bagian kanan.");
-                left = mid + 1;
-            } else {
-                System.out.println("  Nilai " + x + " lebih kecil dari " + arr[mid] + ", mencari di bagian kiri.");
-                right = mid - 1;
-            }
-            iteration++;
-            System.out.println();  //Baris kosong untuk memisahkan iterasi
+        int x = scanner.nextInt();
+        
+        //Mencatat waktu mulai pencarian
+        long startTime = System.nanoTime();
+        
+        //Memanggil metode binarySearch dari class BinaryMethod untuk mencari target dalam array
+        int result = BinaryMethod.binarySearch(data, x);
+        
+        //Mencatat waktu selesai pencarian
+        long endTime = System.nanoTime();
+        
+        //Menampilkan hasil pencarian kepada pengguna
+        if (result != -1) {
+            //Jika target ditemukan, menampilkan indeks posisi target
+            System.out.println("Target " + x + " ditemukan pada indeks " + result);
+        } else {
+            //Jika target tidak ditemukan, menampilkan pesan bahwa target tidak ada dalam array
+            System.out.println("Target " + x + " tidak ditemukan dalam array.");
         }
-
-        //Jika target tidak ditemukan
-        if (result == -1) {
-            System.out.println("Nilai " + x + " tidak ditemukan dalam array.");
-            binaryScanner.close();
-        }
+        
+        //Menghitung dan menampilkan waktu eksekusi dalam milidetik
+        System.out.println("Waktu eksekusi: " + (endTime - startTime) / 1_000_000.0 + " ms");
+        
     }
 }

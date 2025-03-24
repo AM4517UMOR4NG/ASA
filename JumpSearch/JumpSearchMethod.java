@@ -1,71 +1,53 @@
-package JumpSearch;
+package JumpSearch;  // Mendefinisikan package tempat class ini berada
 
 /**
- * JumpMethodInteractive.java
- *
- * Kelas ini menyediakan implementasi metode Jump Search secara interaktif.
- * Metode ini menampilkan langkah-langkah pencarian, mulai dari "melompat"
- * blok-blok
- * hingga pencarian linier dalam blok yang berpotensi mengandung target.
- *
- * Langkah-langkah:
- * 1. Tentukan ukuran blok: step = (int) Math.sqrt(n)
- * 2. Lakukan lompatan blok demi blok:
- * - Periksa elemen di akhir blok (arr[Math.min(step, n) - 1]).
- * - Jika elemen tersebut masih lebih kecil dari target, lompat ke blok
- * selanjutnya.
- * 3. Setelah menemukan blok yang potensial, lakukan pencarian linier di dalam
- * blok tersebut.
- * 4. Kembalikan indeks target jika ditemukan, atau -1 jika tidak ada.
+ * Class JumpSearchMethod yang mengimplementasikan algoritma Jump Search
+ * untuk mencari elemen dalam array terurut
  */
 public class JumpSearchMethod {
+    
+    /**
+     * Metode untuk melakukan pencarian dengan algoritma Jump Search
+     * 
+     * @param arr array terurut yang akan dicari
+     * @param x nilai target yang dicari
+     * @return indeks dari target jika ditemukan, -1 jika tidak ditemukan
+     */
     public static int jumpSearch(int[] arr, int x) {
+        // Mendapatkan panjang array
         int n = arr.length;
-        // Jika array kosong, langsung return -1
-        if (n == 0) {
-            return -1;
-        }
-
-        int step = (int) Math.sqrt(n); // ukuran blok awal
+        
+        //Menentukan ukuran lompatan (block size) berdasarkan akar kuadrat dari panjang array
+        //Ukuran lompatan ini optimal untuk Jump Search
+        int step = (int) Math.sqrt(n);
+        
+        //Menyimpan indeks awal blok yang sedang diperiksa
         int prev = 0;
-        int iteration = 1;
-
-        // Melompat blok demi blok untuk menemukan blok yang berpotensi mengandung
-        // target
+        
+        //Loop untuk mencari blok yang mungkin berisi elemen target
+        //Loop terus berjalan selama indeks masih dalam batas array dan
+        //elemen terakhir dari blok saat ini lebih kecil dari target
         while (prev < n && arr[Math.min(step, n) - 1] < x) {
-            System.out.println("Iterasi " + iteration + ":");
-            int indexToCheck = Math.min(step, n) - 1;
-            System.out.println("  Memeriksa elemen di indeks " + indexToCheck
-                    + " = " + arr[indexToCheck]);
-            System.out.println("  Karena " + arr[indexToCheck] + " < " + x
-                    + ", target belum di blok ini.");
-
+            //Update indeks awal ke indeks akhir blok saat ini
             prev = step;
+            
+            //Maju ke blok berikutnya dengan menambahkan ukuran lompatan
             step += (int) Math.sqrt(n);
-            iteration++;
-
-            if (prev >= n) {
-                System.out.println("Sudah mencapai akhir array. Target tidak ditemukan.");
+            
+            //Jika indeks awal melebihi ukuran array, target tidak ditemukan
+            if (prev >= n)
                 return -1;
-            }
-            System.out.println();
         }
-
-        System.out.println("\nTarget mungkin ada di blok dari indeks " + prev
-                + " sampai " + (Math.min(step, n) - 1));
-        System.out.println("Melakukan pencarian linier di dalam blok tersebut:");
-        System.out.println();
-
-        // Pencarian linier di dalam blok yang ditemukan
+        
+        //Setelah menemukan blok yang mungkin berisi target,
+        //lakukan pencarian linear dalam blok tersebut
         for (int i = prev; i < Math.min(step, n); i++) {
-            System.out.println("  Memeriksa indeks " + i + ": " + arr[i]);
-            if (arr[i] == x) {
-                System.out.println("  Target " + x + " ditemukan pada indeks " + i);
+            //Jika elemen saat ini sama dengan target, kembalikan indeksnya
+            if (arr[i] == x)
                 return i;
-            }
         }
-
-        System.out.println("Target " + x + " tidak ditemukan dalam array.");
+        
+        //Jika target tidak ditemukan setelah pencarian linear, kembalikan -1
         return -1;
     }
 }

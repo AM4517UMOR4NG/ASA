@@ -1,31 +1,28 @@
-package JumpSearch;
-
-import java.util.Scanner;
-import java.util.Arrays;
+package JumpSearch;  // Mendefinisikan package tempat class ini berada
 
 /**
- * JumpDataInteractive.java
- *
- * Kelas ini menangani input data dari pengguna.
- * Pengguna akan diminta untuk memasukkan jumlah elemen dan nilai-nilai array
- * (harus terurut).
+ * Class JumpSearchData yang menyediakan metode untuk menghasilkan data uji
+ * yang akan digunakan dalam algoritma Jump Search
  */
 public class JumpSearchData {
-    public static int[] getData() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Masukkan jumlah elemen array (harus terurut): ");
-        int n = scanner.nextInt();
-        int[] arr = new int[n];
-
-        System.out.println("Masukkan elemen array yang sudah terurut:");
-        for (int i = 0; i < n; i++) {
-            arr[i] = scanner.nextInt();
+    
+    /**
+     * Metode statis untuk menghasilkan array berurutan dengan nilai 1 sampai size
+     * 
+     * @param size ukuran array yang akan dibuat
+     * @return array berurutan dengan nilai dari 1 sampai size
+     */
+    public static int[] getData(int size) {
+        //embuat array baru dengan ukuran yang diberikan sebagai parameter
+        int[] arr = new int[size];
+        
+        //Melakukan iterasi dari 0 sampai size-1
+        for (int i = 0; i < size; i++) {
+            //Mengisi array dengan nilai i+1, sehingga nilai dimulai dari 1 sampai size
+            arr[i] = i + 1;
         }
-
-        System.out.println("Array yang dimasukkan: " + Arrays.toString(arr));
-        System.out.println();
-
+        
+        //Mengembalikan array yang sudah diisi
         return arr;
     }
 }

@@ -1,39 +1,47 @@
-package BinarySearch;
+package BinarySearch;  // Mendefinisikan package tempat class ini berada
 
 /**
- * BinaryMethod.java
- * 
- * Kelas ini menyediakan implementasi metode Binary Search.
- * Binary Search adalah algoritma pencarian yang bekerja pada array yang sudah terurut.
- * Algoritma ini membagi ruang pencarian secara berulang untuk menemukan target.
- *
- * Prinsip Kerja:
- * 1. Inisialisasi dua indeks: left (awal) dan right (akhir).
- * 2. Hitung indeks tengah: mid = left + (right - left) / 2.
- * 3. Bandingkan elemen di indeks mid dengan target:
- *    - Jika sama, kembalikan indeks mid.
- *    - Jika target lebih kecil, cari di bagian kiri (set right = mid - 1).
- *    - Jika target lebih besar, cari di bagian kanan (set left = mid + 1).
- * 4. Ulangi langkah 2-3 hingga target ditemukan atau interval pencarian habis.
- *
- * Kompleksitas Waktu: O(log n)
+ * Class BinaryMethod yang mengimplementasikan algoritma Binary Search
+ * untuk mencari elemen dalam array terurut
  */
 public class BinaryMethod {
+    
+    /**
+     * Metode untuk melakukan pencarian dengan algoritma Binary Search
+     * 
+     * @param arr array terurut yang akan dicari
+     * @param x nilai target yang dicari
+     * @return indeks dari target jika ditemukan, -1 jika tidak ditemukan
+     */
     public static int binarySearch(int[] arr, int x) {
-        int left = 0, right = arr.length - 1;
+        //Menginisialisasi batas kiri pencarian
+        int left = 0;
+        
+        //Menginisialisasi batas kanan pencarian (indeks terakhir array)
+        int right = arr.length - 1;
+        
+        //Melakukan pencarian selama batas kiri tidak melebihi batas kanan
         while (left <= right) {
+            //Menemukan indeks tengah dari range pencarian saat ini
+            //Rumus (left + right) / 2 dapat menyebabkan integer overflow pada array besar
+            //sehingga digunakan rumus left + (right - left) / 2 yang lebih aman
             int mid = left + (right - left) / 2;
-            //Jika elemen di mid adalah target, kembalikan indeksnya
-            if (arr[mid] == x)
+            
+            //Jika elemen tengah sama dengan target, kembalikan indeksnya
+            if (arr[mid] == x) {
                 return mid;
-            //Jika target lebih besar, abaikan bagian kiri
-            else if (arr[mid] < x)
+            } 
+            //Jika elemen tengah lebih kecil dari target, cari di bagian kanan (nilai lebih besar)
+            else if (arr[mid] < x) {
                 left = mid + 1;
-            //Jika target lebih kecil, abaikan bagian kanan
-            else
+            } 
+            //Jika elemen tengah lebih besar dari target, cari di bagian kiri (nilai lebih kecil)
+            else {
                 right = mid - 1;
+            }
         }
-        //Target tidak ditemukan
+        
+        //Jika target tidak ditemukan setelah pencarian selesai, kembalikan -1
         return -1;
     }
 }
