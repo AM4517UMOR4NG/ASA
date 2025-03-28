@@ -1,7 +1,5 @@
 package BinarySearch;  // Mendefinisikan package tempat class ini berada
-
 import java.util.Scanner;  // Mengimpor class Scanner untuk menerima input dari pengguna
-
 /**
  * Class BinaryExecution yang berfungsi sebagai main class untuk menjalankan
  * algoritma Binary Search dan mengukur waktu eksekusinya
@@ -65,6 +63,8 @@ public class BinaryExecution {
         
         //Menghitung dan menampilkan waktu eksekusi dalam milidetik
         System.out.println("Waktu eksekusi: " + (endTime - startTime) / 1_000_000.0 + " ms");
+        
+       
         
     }
 }

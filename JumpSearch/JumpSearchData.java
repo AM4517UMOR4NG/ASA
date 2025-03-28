@@ -1,5 +1,4 @@
 package JumpSearch;  // Mendefinisikan package tempat class ini berada
-
 /**
  * Class JumpSearchData yang menyediakan metode untuk menghasilkan data uji
  * yang akan digunakan dalam algoritma Jump Search
