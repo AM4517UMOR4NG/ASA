@@ -12,7 +12,7 @@ public class ExecutionMain {
 
         // Uji perbandingan pada berbagai ukuran data
         Mekanisme.compareSearches(10);
-        Mekanisme.compareSearches(120);
+        Mekanisme.compareSearches(100);
         Mekanisme.compareSearches(1000);
         Mekanisme.compareSearches(10000);
         Mekanisme.compareSearches(100000);

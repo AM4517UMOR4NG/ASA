@@ -74,8 +74,6 @@ public class JumpSearchExecution {
         // Menghitung dan menampilkan waktu eksekusi dalam milidetik
         System.out.println("Waktu eksekusi: " + (endTime - startTime) / 1_000_000.0 + " ms");
         
-        
-        
-        
+       
     }
 }
