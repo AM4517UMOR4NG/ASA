@@ -113,10 +113,11 @@ public class GdanBMain {
                         new MataPelajaran("Komputer Paralel dan Terdistribusi", 6, 2),
                         new MataPelajaran("Interaksi Manusia dan Komputer", 4, 2),
                         new MataPelajaran("Kewarganegaraan", 8, 2),
-                        new MataPelajaran("Rekayasa Perangkat Lunak", 7, 3)), BATAS_JAM));
-                
+                        new MataPelajaran("Rekayasa Perangkat Lunak", 7, 3)), BATAS_JAM)
+        );
 
         for (Siswa s : siswaList) {
+            // Cetak Data Input
             System.out.println("\nData Input: " + s.getNama());
             System.out.println(garis);
             System.out.printf(fmtH, "Mata Pelajaran", "Prioritas", "Durasi");
@@ -126,13 +127,13 @@ public class GdanBMain {
             }
             System.out.println(garis);
 
-            // Greedy dengan pengukuran waktu
+            // Greedy
             System.out.println("Greedy:");
-            long startTimeGreedy = System.nanoTime();
+            long startG = System.nanoTime();
             Map<String, Object> g = Penjadwalan.jadwalGreedy(s.getDaftarMapel(), BATAS_JAM);
-            long endTimeGreedy = System.nanoTime();
-            double greedyTimeMs = (endTimeGreedy - startTimeGreedy) / 1_000_000.0;
-            
+            long endG = System.nanoTime();
+            double timeG = (endG - startG) / 1_000_000.0;
+
             @SuppressWarnings("unchecked")
             List<MataPelajaran> greedyList = (List<MataPelajaran>) g.get("terpilih");
             int skorG = (int) g.get("skor");
@@ -144,28 +145,29 @@ public class GdanBMain {
             }
             System.out.println(garis);
             System.out.println("Skor Total Greedy: " + skorG);
-            System.out.printf("Waktu Eksekusi Greedy: %.3f ms%n", greedyTimeMs);
+            System.out.printf("Waktu Eksekusi Greedy: %.3f ms%n", timeG);
 
-            // Optimal dengan pengukuran waktu
+            // Backtracking
             System.out.println("Backtracking:");
-            long startTimeOptimal = System.nanoTime();
-            Map<String, Object> b = Penjadwalan.jadwalOptimal(s.getDaftarMapel(), BATAS_JAM);
-            long endTimeOptimal = System.nanoTime();
-            double optimalTimeMs = (endTimeOptimal - startTimeOptimal) / 1_000_000.0;
-            
+            long startB = System.nanoTime();
+            Map<String, Object> b = Penjadwalan.jadwalBacktracking(s.getDaftarMapel(), BATAS_JAM);
+            long endB = System.nanoTime();
+            double timeB = (endB - startB) / 1_000_000.0;
+
             @SuppressWarnings("unchecked")
-            List<MataPelajaran> optimalList = (List<MataPelajaran>) b.get("terpilih");
+            List<MataPelajaran> backtrackList = (List<MataPelajaran>) b.get("terpilih");
             int skorB = (int) b.get("skor");
             System.out.println(garis);
             System.out.printf(fmtH, "Mapel Terpilih", "Prioritas", "Durasi");
             System.out.println(garis);
-            for (MataPelajaran mp : optimalList) {
+            for (MataPelajaran mp : backtrackList) {
                 System.out.printf(fmtB, mp.getNama(), mp.getPrioritas(), mp.getDurasi());
             }
             System.out.println(garis);
-            System.out.println("Skor Total Optimal: " + skorB);
-            System.out.printf("Waktu Eksekusi Backtracking: %.3f ms%n", optimalTimeMs);
+            System.out.println("Skor Total Backtracking: " + skorB);
+            System.out.printf("Waktu Eksekusi Backtracking: %.3f ms%n", timeB);
 
+            // Kesimpulan per-siswa
             if (skorG == skorB) {
                 System.out.println("Kesimpulan: Greedy sudah optimal (skor = " + skorG + ")");
             } else {
@@ -173,33 +175,24 @@ public class GdanBMain {
             }
         }
 
-        // Seksi tambahan: Ringkasan Global Perbandingan Greedy vs Optimal dengan Runtime
-        System.out.println("\n=== Ringkasan Perbandingan Skor dan Waktu Eksekusi ===");
-        System.out.printf("| %-30s | %6s | %7s | %8s | %9s | %11s |\n", 
-                          "Nama Siswa", "Greedy", "Optimal", "Selisih", "T_Greedy", "T_Backtrack");
-        System.out.println("|--------------------------------|--------|---------|----------|-----------|-------------|");
-
-        for (Siswa siswa : siswaList) {
-            // Pengukuran waktu untuk Greedy
-            long startGreedy = System.nanoTime();
-            Map<String, Object> greedyHasil = Penjadwalan.jadwalGreedy(siswa.getDaftarMapel(), siswa.getBatasJamMingguan());
-            long endGreedy = System.nanoTime();
-            double greedyTime = (endGreedy - startGreedy) / 1_000_000.0;
-
-            // Pengukuran waktu untuk Optimal
-            long startOptimal = System.nanoTime();
-            Map<String, Object> optimalHasil = Penjadwalan.jadwalOptimal(siswa.getDaftarMapel(), siswa.getBatasJamMingguan());
-            long endOptimal = System.nanoTime();
-            double optimalTime = (endOptimal - startOptimal) / 1_000_000.0;
-
-            int skorGreedy = (int) greedyHasil.get("skor");
-            int skorOptimal = (int) optimalHasil.get("skor");
-            int selisih = skorOptimal - skorGreedy;
-
-            System.out.printf("| %-30s | %6d | %7d | %8d | %7.2f ms | %9.2f ms |\n", 
-                              siswa.getNama(), skorGreedy, skorOptimal, selisih, greedyTime, optimalTime);
+        // Ringkasan Global
+        System.out.println("\n=== Ringkasan Perbandingan Skor & Waktu Eksekusi ===");
+        System.out.printf("| %-30s | %6s | %11s | %9s | %12s |%n",
+                          "Nama Siswa", "SkorG", "SkorB", "ΔSkor", "T_Greedy(ms)", "T_Backtrack(ms)");
+        System.out.println("+--------------------------------+--------+-------------+----------+--------------+");
+        for (Siswa s : siswaList) {
+            long t0 = System.nanoTime();
+            int gScore = (int) Penjadwalan.jadwalGreedy(s.getDaftarMapel(), BATAS_JAM).get("skor");
+            long t1 = System.nanoTime();
+            long t2 = System.nanoTime();
+            int bScore = (int) Penjadwalan.jadwalBacktracking(s.getDaftarMapel(), BATAS_JAM).get("skor");
+            long t3 = System.nanoTime();
+            double tg = (t1 - t0) / 1_000_000.0;
+            double tb = (t3 - t2) / 1_000_000.0;
+            int delta = bScore - gScore;
+            System.out.printf("| %-30s | %6d | %11d | %9d | %12.3f | %n",
+                              s.getNama(), gScore, bScore, delta, tg, tb);
         }
-
-        System.out.println("===================================================================================\n");
+        System.out.println("+--------------------------------------------------------------------------+");
     }
 }
