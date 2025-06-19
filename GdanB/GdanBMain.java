@@ -133,7 +133,7 @@ public class GdanBMain {
             Map<String, Object> g = Penjadwalan.jadwalGreedy(s.getDaftarMapel(), BATAS_JAM);
             long endG = System.nanoTime();
             double timeG = (endG - startG) / 1_000_000.0;
-
+            
             @SuppressWarnings("unchecked")
             List<MataPelajaran> greedyList = (List<MataPelajaran>) g.get("terpilih");
             int skorG = (int) g.get("skor");
