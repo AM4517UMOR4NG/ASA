@@ -1,5 +1,4 @@
-//Proses Eksekusi Java
-//File: HelloWorld.java
+package DayOnerelearnjava;
 
 /*
  * 1. PENULISAN KODE SUMBER
@@ -8,7 +7,7 @@
  * - File ini adalah kode sumber yang belum dapat dieksekusi langsung oleh komputer.
  */
 
-public class HelloWorld {
+public class ExecutionProcess {
     /*
      * 2. KOMPILASI KE BYTECODE
      * - Kode sumber (.java) dikompilasi oleh Java Compiler (javac), bagian dari JDK.

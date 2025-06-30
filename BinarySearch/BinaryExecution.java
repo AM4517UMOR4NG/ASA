@@ -12,14 +12,14 @@ public class BinaryExecution {
      */
     public static void main(String[] args) {
         //Membuat objek Scanner untuk menerima input dari pengguna
-        Scanner scanner = new Scanner(System.in);
+        Scanner n = new Scanner(System.in);
         
         //Menampilkan pilihan ukuran array kepada pengguna
         System.out.println("Pilih ukuran array:");
         System.out.println("1) 1.000  2) 100.000  3) 1.000.000  4) 10.000.000");
         
         //Membaca pilihan pengguna
-        int choice = scanner.nextInt();
+        int choice = n.nextInt();
         
         //Mendeklarasikan variabel untuk menyimpan ukuran array
         int size;
@@ -41,7 +41,7 @@ public class BinaryExecution {
         
         //Meminta pengguna memasukkan nilai target yang akan dicari
         System.out.print("Masukkan nilai target yang dicari: ");
-        int x = scanner.nextInt();
+        int x = n.nextInt();
         
         //Mencatat waktu mulai pencarian
         long startTime = System.nanoTime();
@@ -64,6 +64,8 @@ public class BinaryExecution {
         //Menghitung dan menampilkan waktu eksekusi dalam milidetik
         System.out.println("Waktu eksekusi: " + (endTime - startTime) / 1_000_000.0 + " ms");
         
+        // Menutup Scanner untuk mencegah resource leak
+        n.close();
   
     }
 }
