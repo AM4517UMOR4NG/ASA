@@ -1,19 +1,19 @@
 package DayTworelearnjava;
 
-public class IfElse {
+public class IfElse {// Java Program to implement
     public static void main(String[] args) {
-        // Deklarasi variabel
-        int nilai = 75;//ganti
-
-        // Struktur if-else
-        if (nilai >= 80) {
-            System.out.println("Nilai Anda A");
-        } else if (nilai >= 70) {
-            System.out.println("Nilai Anda B");
-        } else if (nilai >= 60) {
-            System.out.println("Nilai Anda C");
+      
+        int a = 25;
+        double w = 65.5;
+      
+        if (a >= 18) {
+            if (w >= 50.0) {
+                System.out.println("You are eligible to donate blood.");
+            } else {
+                System.out.println("You must weigh at least 50 kilograms to donate blood.");
+            }
         } else {
-            System.out.println("Nilai Anda D");
+            System.out.println("You must be at least 18 years old to donate blood.");
         }
     }
 }
